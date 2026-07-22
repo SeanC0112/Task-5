@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seanc-task5job
+spec:
+  template:
+    spec:
+      containers:
+      - name: seanc-task5job
+        image: pytorch/pytorch:latest
+        command:
+        - sh
+        - -c
+        - "cd /pvcvolume && git clone  && cd Task-5 && bash bashScript.sh"
+        volumeMounts:
+        - name: pvcvolume
+          mountPath: /pvcvolume
+        resources:
+          limits:
+            memory: 32Gi
+            cpu: "8"
+            nvidia.com/gpu: 2
+          requests:
+            memory: 16Gi
+            cpu: "4"
+            nvidia.com/gpu: 1
+      volumes:
+      - name: pvcvolume
+        persistentVolumeClaim:
+          claimName: seanc-task5pvc
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: nvidia.com/gpu.product
+      #           operator: In
+      #           values:
+      #           - NVIDIA-A10
+      restartPolicy: Never
+  backoffLimit: 2
+  ttlSecondsAfterFinished: 600
