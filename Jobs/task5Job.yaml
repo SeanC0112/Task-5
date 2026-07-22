@@ -7,11 +7,11 @@ spec:
     spec:
       containers:
       - name: seanc-task5job
-        image: pytorch/pytorch:latest
+        image: stablebaselines/stable-baselines3
         command:
         - sh
         - -c
-        - "cd /pvcvolume && git clone  && cd Task-5 && bash bashScript.sh"
+        - "cd /pvcvolume && git clone https://github.com/SeanC0112/Task-5 && cd Task-5 && bash bashScript.sh"
         volumeMounts:
         - name: pvcvolume
           mountPath: /pvcvolume
@@ -19,7 +19,7 @@ spec:
           limits:
             memory: 32Gi
             cpu: "8"
-            nvidia.com/gpu: 2
+            nvidia.com/gpu: 1
           requests:
             memory: 16Gi
             cpu: "4"
