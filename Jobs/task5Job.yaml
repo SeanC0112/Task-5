@@ -5,20 +5,29 @@ metadata:
 spec:
   template:
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - k8s-chase-ci-07.calit2.optiputer.net
       containers:
       - name: seanc-task5job
         image: stablebaselines/stable-baselines3
         command:
         - sh
         - -c
-        - "cd /pvcvolume && git clone https://github.com/SeanC0112/Task-5 && cd Task-5 && bash bashScript.sh"
+        - "apt-get update && apt-get install -y git && cd /pvcvolume && git clone https://github.com/SeanC0112/Task-5 && cd Task-5 && bash bashScript.sh"
         volumeMounts:
         - name: pvcvolume
           mountPath: /pvcvolume
         resources:
           limits:
-            memory: 32Gi
-            cpu: "8"
+            memory: 16Gi
+            cpu: "4"
             nvidia.com/gpu: 1
           requests:
             memory: 16Gi
