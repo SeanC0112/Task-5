@@ -16,7 +16,7 @@ spec:
                 - k8s-chase-ci-07.calit2.optiputer.net
       containers:
       - name: seanc-task5job
-        image: stablebaselines/stable-baselines3
+        image: pytorch/pytorch
         securityContext:
           runAsUser: 0
         command:
