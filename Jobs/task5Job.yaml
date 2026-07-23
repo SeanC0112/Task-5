@@ -17,6 +17,8 @@ spec:
       containers:
       - name: seanc-task5job
         image: stablebaselines/stable-baselines3
+        securityContext:
+          runAsUser: 0
         command:
         - sh
         - -c
