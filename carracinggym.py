@@ -8,12 +8,13 @@ model.learn(total_timesteps=100000, log_interval=4, progress_bar=True)
 model.save("sac_carracing_model")
 # model = SAC.load("sac_carracing_model", env=env)
 
-
+total_reward = 0
 obs, info = env.reset()
 terminated, truncated = False, False
 while not (terminated or truncated):
     action, _states = model.predict(obs, deterministic=True)
     obs, reward, terminated, truncated, info = env.step(action)
+    total_reward += reward
     env.render()
 
-print("Episode finished. Total reward:", info["episode"]["r"])
+print("Episode finished. Total reward:", total_reward)
